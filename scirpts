@@ -1,0 +1,17 @@
+oldNameCall = hookmetamethod(game,"__namecall",function(self,...)
+    local args = {...}
+    local method = getnamecallmethod()
+    if not checkcaller() and getcallingscript().Name == "LocalClean" then
+        return {}
+    end
+    if method == "FireServer" and self.Name == "RequestPlayerKick" then
+        return {}
+    end
+    return oldNameCall(self,...)
+end)
+local Player = game.Players.LocalPlayer
+while wait() do
+    if Player.Character and Player.Character:FindFirstChild("CharacterControl") then
+        Player.Character:FindFirstChild("CharacterControl").Disabled = true
+    end
+end
